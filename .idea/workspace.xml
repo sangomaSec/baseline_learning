@@ -7,6 +7,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectId" id="1idJX7uEFs3lZw5osnBx7urjIW3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -14,6 +21,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -50,6 +58,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1602243264678">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1602243264678" />
     <state x="817" y="279" key="EnvironmentVariablesDialog" timestamp="1602231591095">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -58,5 +70,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1602232928534" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1602235583080">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1602235583080" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602233472996">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1602233472996" />
   </component>
 </project>
