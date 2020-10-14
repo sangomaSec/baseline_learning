@@ -1,7 +1,6 @@
-from typing import Any
-
 import torch
 import torch.nn as nn
+import torch.distributed
 
 
 class MoCo(nn.Module):
@@ -51,7 +50,7 @@ class MoCo(nn.Module):
             param_k.data.copy_(param_q.data)
             param_k.requires_grad = False
 
-    @torch.no_grad
+    @torch.no_grad()
     def _enqueue_and_dequeue(self, keys):
         """
         the function of the samples to dequeue and enqueue
@@ -68,10 +67,9 @@ class MoCo(nn.Module):
 
         self.queue_str[0] = ptr
 
-    @torch.no_grad
+    @torch.no_grad()
     def forward(self, im_q, im_k):
         """
-
         :param im_q:
         :param im_k:
         :return: log_its, targets
@@ -82,22 +80,35 @@ class MoCo(nn.Module):
 
         # compute key features
         with torch.no_grad():
-            self._momentum_update_key_encoder
+            self._momentum_update_key_encoder()
 
             im_k, idx_un_shuffle = self._shuffle_bn(im_k)
 
             k = self.encoder_k(im_k)
             k = nn.functional.normalize(k, dim=1)
 
+            # undo shuffle
+            k = self._un_shuffle_bn(k, idx_un_shuffle)
 
+        l_pos = torch.einsum('nc,nc->n', [q, k]).unsqueeze(-1)
+        l_neg = torch.einsum('nc,ck->nk', [q, self.queue.clone().detach()])
 
-    @torch.no_grad
+        log_its = torch.cat([l_pos, l_neg], dim=1)
+        log_its /= self.T
+
+        labels = torch.zeros(log_its.shape[0], dtype=torch.long).cuda()
+
+        self._enqueue_and_dequeue(k)
+
+        return log_its, labels
+
+    @torch.no_grad()
     def _momentum_update_key_encoder(self):
         """update the key encoder"""
         for param_q, param_k in zip(self.encoder_q.parameters(), self.encoder_k.parameters()):
             param_k.data = param_k.data * self.momentum + param_q.data * (1. - self.momentum)
 
-    @torch.no_grad
+    @torch.no_grad()
     def _shuffle_bn(self, x):
         """
         Batch shuffle, for making use of BatchNorm
@@ -120,7 +131,7 @@ class MoCo(nn.Module):
 
         return x_gather[idx_this], idx_un_shuffle
 
-    @torch.no_grad
+    @torch.no_grad()
     def _un_shuffle_bn(self, x, idx_un_shuffle):
         batch_size_this = x.shape[0]
         x_gather = concat_all_gather(x)
@@ -134,7 +145,7 @@ class MoCo(nn.Module):
         return x_gather[idx_this]
 
 
-@torch.no_grad
+@torch.no_grad()
 def concat_all_gather(tensor):
     tensors_gather = [torch.ones_like(tensor)
                       for _ in range(torch.distributed.get_world_size())]

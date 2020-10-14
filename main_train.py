@@ -15,6 +15,7 @@ import torch.backends.cudnn as cudnn
 import torch.distributed as dist
 import torch.optim
 import torch.multiprocessing as mp
+import torch.multiprocessing.spawn
 import torch.utils.data
 import torch.utils.data.distributed
 import torchvision.transforms as transforms
@@ -25,12 +26,11 @@ import moco.builder
 import moco.loader
 
 model_names = sorted(name for name in models.__dict__
-    if name.islower() and not name.startswith("__")
-    and callable(models.__dict__[name]))
+                     if name.islower() and not name.startswith("__")
+                     and callable(models.__dict__[name]))
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
-parser.add_argument('data', metavar='DIR',
-                    help='path to dataset')
+parser.add_argument('data', metavar='DIR',  help='path for dataset')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
                     choices=model_names,
                     help='model architecture: '
@@ -63,7 +63,7 @@ parser.add_argument('--world-size', default=-1, type=int,
                     help='number of nodes for distributed training')
 parser.add_argument('--rank', default=-1, type=int,
                     help='node rank for distributed training')
-parser.add_argument('--dist-url', default='tcp://224.66.41.62:23456', type=str,
+parser.add_argument('--dist-url', default='tcp://localhost:8879', type=str,
                     help='url used to set up distributed training')
 parser.add_argument('--dist-backend', default='nccl', type=str,
                     help='distributed backend')
@@ -99,6 +99,7 @@ parser.add_argument('--cos', action='store_true',
 def main():
     args = parser.parse_args()
 
+    # seed training. but there is no more information about it
     if args.seed is not None:
         random.seed(args.seed)
         torch.manual_seed(args.seed)
@@ -155,9 +156,10 @@ def main_operate(gpu, ngpus_per_node, args):
     print("=> creating model '{}'".format(args.arch))
 
     # define the MoCo model default arch is resnet50
+    # base_encoder, momentum=0.999, t=0.07, dim=128, bs=65536, mlp=False
     model = moco.builder.MoCo(
         models.__dict__[args.arch],
-        args.moco_dim, args.moco_k, args.moco_m, args.moco_t, args.mlp)
+        args.moco_m, args.moco_t, args.moco_dim, args.moco_k, args.mlp)
     print(model)
 
     if args.distributed:
@@ -184,11 +186,13 @@ def main_operate(gpu, ngpus_per_node, args):
             # available GPUs if device_ids are not set
             model = torch.nn.parallel.DistributedDataParallel(model)
     elif args.gpu is not None:
+        # for pass this part successfully, we should certain a gpu for the training
         torch.cuda.set_device(args.gpu)
         model = model.cuda(args.gpu)
         # comment out the following line for debugging
         raise NotImplementedError("Only DistributedDataParallel is supported.")
     else:
+        # pass
         # AllGather implementation (batch shuffle, queue update, etc.) in
         # this code only supports DistributedDataParallel.
         raise NotImplementedError("Only DistributedDataParallel is supported.")
@@ -197,7 +201,7 @@ def main_operate(gpu, ngpus_per_node, args):
     criterion = nn.CrossEntropyLoss().cuda(args.gpu)
     optimizer = torch.optim.SGD(model.parameters(), args.lr,
                                 momentum=args.momentum,
-                                weight_decay=args.weight.decay)
+                                weight_decay=args.weight_decay)
 
     # optionally resume from a checkpoint
     if args.resume:
@@ -226,6 +230,7 @@ def main_operate(gpu, ngpus_per_node, args):
                                      std=[0.229, 0.224, 0.225])
     if args.aug_plus:
         # this block is for MoCo v2
+        augmentation = []
         pass
     else:
         # this block is for MoCo v1
@@ -257,19 +262,19 @@ def main_operate(gpu, ngpus_per_node, args):
     # iterate epochs
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
-            train_sampler.set_epoch()
+            train_sampler.set_epoch(epoch)
         adjust_learning_rate(optimizer, epoch, args)
 
-    train(train_loader, model, criterion, optimizer, epoch, args)
+        train(train_loader, model, criterion, optimizer, epoch, args)
 
-    if not args.multiprocessing_distributed or (args.multiprocessing_distributed
+        if not args.multiprocessing_distributed or (args.multiprocessing_distributed
            and args.rank % ngpus_per_node == 0):
-        save_checkpoint({
-            'epoch': epoch + 1,
-            'arch': args.arch,
-            'state_dict': model.state_dict().update(),
-            'optimizer': optimizer.state_dict(),
-        }, is_best=False, filename='checkpoint_{:04d}.pth.tar'.format(epoch))
+            save_checkpoint({
+                'epoch': epoch + 1,
+                'arch': args.arch,
+                'state_dict': model.state_dict().update(),
+                'optimizer': optimizer.state_dict(),
+            }, is_best=False, filename='checkpoint_{:04d}.pth.tar'.format(epoch))
 
 
 def save_checkpoint(state, is_best, filename):
@@ -290,6 +295,8 @@ def adjust_learning_rate(optimizer, epoch, args):
 
 
 def train(train_loader, model, criterion, optimizer, epoch, args):
+
+    # this block is to build the print information
     batch_time = AverageMeter('Time', ':6.3f')
     data_time = AverageMeter('Data', ':6.3f')
     losses = AverageMeter('loss', ':.4e')
@@ -299,6 +306,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         len(train_loader),
         [batch_time, data_time, losses, top1, top5],
         prefix='Epoch: [{}]'.format(epoch))
+    # block end
 
     # switch to train mode
     """
@@ -312,6 +320,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
     end = time.time()
 
     for i, (images, _) in enumerate(train_loader):
+        # compute run time
         data_time.update(time.time() - end)
 
         # if the input is feature we should change here?
@@ -347,10 +356,10 @@ class AverageMeter(object):
         self.name = name
         self.fmt = fmt
         self.reset()
-        self.val = 0 # check if we should delete this column
-        self.avg = 0 # check if we should delete this column
-        self.sum = 0 # check if we should delete this column
-        self.count = 0 # check if we should delete this column
+        self.val = 0  # check if we should delete this column
+        self.avg = 0  # check if we should delete this column
+        self.sum = 0  # check if we should delete this column
+        self.count = 0  # check if we should delete this column
 
     def reset(self):
         self.val = 0
@@ -371,15 +380,16 @@ class AverageMeter(object):
 
 class ProgressMeter(object):
     def __init__(self, num_batches, meters, prefix=""):
+        self.batch_fmt_str = self._get_batch_fmt_str(num_batches)
         self.batch_meters = meters
         self.prefix = prefix
 
     def display(self, batch):
-        entries = [self.prefix]
-        entries += [str(meter) for meter in self.meters]
+        entries = [self.prefix + self.batch_fmt_str.format(batch)]
+        entries += [str(meter) for meter in self.batch_meters]
         print('\t'.join(entries))
 
-    def _get_batch_fmt_dtr(self, num_batches):
+    def _get_batch_fmt_str(self, num_batches):
         num_digits = len(str(num_batches // 1))
         fmt = '{:' + str(num_digits) + 'd}'
         return '[' + fmt + '/' + fmt.format(num_batches) + ']'
@@ -408,9 +418,5 @@ def accuracy(output, target, top_k=(1,)):
     return res
 
 
-if __name__ == '__main_':
+if __name__ == '__main__':
     main()
-
-
-
-
