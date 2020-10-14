@@ -190,7 +190,8 @@ def main_operate(gpu, ngpus_per_node, args):
         torch.cuda.set_device(args.gpu)
         model = model.cuda(args.gpu)
         # comment out the following line for debugging
-        raise NotImplementedError("Only DistributedDataParallel is supported.")
+        # pass
+        # raise NotImplementedError("Only DistributedDataParallel is supported.")
     else:
         # pass
         # AllGather implementation (batch shuffle, queue update, etc.) in
@@ -223,8 +224,8 @@ def main_operate(gpu, ngpus_per_node, args):
 
     cudnn.benchmark = True
 
-    # loading data
-    train_dir = os.path.join('E:\\pycode\\ibw_MoCo\\dataset', 'train')
+    # loading data  dataset\train 里的文件夹里放sample
+    train_dir = os.path.join('.\\dataset', 'train')
     # 下面的normalize是常规操作嘛？里面的参数
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
