@@ -1,7 +1,7 @@
-import numpy as np
-import sys
-import math
-import sklearn as sk
+from typing import Any
+
+import torch
+import torch.nn as nn
 
 """
  特征组合的优势在于对特征组合以及高维灾难两方面问题的处理
@@ -18,46 +18,37 @@ import sklearn as sk
 """
 
 
-class FM(object):
+class FM(nn.Module):
 
-    def __init__(self, w, lr):
-        self.data = None
-        self.w_0 = None
-        self.w = w
-        self.lr = lr
-
-    def load_data(self, file_path):
-        i_file = open(file_path)
-        self.w_0 = 0
-        results = []
+    def __init__(self, n=10, k=5):
         """
-         * put tuples to results. after this method the results is (v1, v2, v3......)
+
+        :param n: 对象由几维特征进行表示
+        :param k: 对象的特征由几维子特征表示
         """
-        for line in i_file:
-            line_list = line.strip().split(',')  # do not know the real dataset use what char to split the data
-            line_tuple = tuple(line_list)
-            results.append(line_tuple)
-        return results
+        super(FM, self).__init__()
+        self.n = n
+        self.k = k
+        self.linear = nn.Linear(self.n, 1)
+        self.v = nn.Parameter(torch.randn(self.n, self.k))
+        nn.init.uniform_(self.v, -0.1, 0.1)
 
-    def _factor_machine(self, args, n, epochs):
-        self.w = np.zeros((n, 1))
-        self.w_0 = 0
-        for epoch in epochs:
-            print(epoch)
+    def fm_layer(self, x):
+        linear_part = self.linear(x)
+        interaction_part_1 = torch.mm(x, self.v)
+        interaction_part_1 = torch.pow(interaction_part_1, 2)
+        interaction_part_2 = torch.mm(torch.pow(x, 2), torch.pow(self.v, 2))
+        out = linear_part + 0.5 * torch.sum(interaction_part_1 - interaction_part_2, 1, keepdim=False)
+        return out
 
-    @staticmethod
-    def sig_function(inx):
-        return 1.0 / (1 + math.exp(-inx))
-
-    def train(self, data):
-        """"""
-
-    def predict(self, data):
-        """"""
+    def forward(self, x):
+        return self.fm_layer(x)
 
 
 if __name__ == '__main__':
-    # fm = FM()
-    # dataset = fm.load_data('.\\old.txt')
-    print()
+    fm = FM(n=10, k=5)
+    x = torch.randn(1, 10)
+    output = fm(x)
+    print(output)
+
 
