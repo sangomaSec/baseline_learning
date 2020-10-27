@@ -24,8 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fdf176de-53be-4476-a68c-2014ffc93fbc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_algorithm/fm.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_algorithm/fm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_algorithm/hello.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,15 +51,39 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../pyFM-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\pycode\ibw_MoCo\dataset" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\pycode\ibw_MoCo\dataset\train\1" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.fm">
+  <component name="RunManager" selected="Python.test_sth">
+    <configuration name="bpr" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ibw_MoCo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/base_algorithm" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/base_algorithm/bpr.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="fm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ibw_MoCo" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,8 +168,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test_sth" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ibw_MoCo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/base_algorithm" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/base_algorithm/test_sth.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test_sth" />
+        <item itemvalue="Python.bpr" />
         <item itemvalue="Python.fm" />
         <item itemvalue="Python.hello" />
         <item itemvalue="Python.main_train" />
@@ -182,9 +227,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="655" y="320" key="#com.intellij.fileTypes.FileTypeChooser/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1602677679736" />
-    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1603271007887">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="-650" y="427" key="#com.intellij.ide.util.MemberChooser" timestamp="1603594521010">
+      <screen x="-1080" y="0" width="1080" height="1880" />
     </state>
+    <state x="-650" y="427" key="#com.intellij.ide.util.MemberChooser/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603594521010" />
     <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603271007887" />
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1602985302128">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -194,47 +240,51 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="817" y="279" key="EnvironmentVariablesDialog/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1602231591095" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1603276510038">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1603350759314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-664" y="497" key="FileChooserDialogImpl/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603074614307" />
-    <state x="740" y="275" key="FileChooserDialogImpl/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603276510038" />
-    <state width="1899" height="143" key="GridCell.Tab.0.bottom" timestamp="1603277103006">
+    <state x="740" y="275" key="FileChooserDialogImpl/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603350759314" />
+    <state width="1899" height="320" key="GridCell.Tab.0.bottom" timestamp="1603763976697">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1059" height="1137" key="GridCell.Tab.0.bottom/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603071700687" />
-    <state width="1899" height="143" key="GridCell.Tab.0.bottom/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603277103006" />
-    <state width="1899" height="143" key="GridCell.Tab.0.center" timestamp="1603277103006">
+    <state width="1059" height="60" key="GridCell.Tab.0.bottom/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603630622400" />
+    <state width="1899" height="320" key="GridCell.Tab.0.bottom/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603763976697" />
+    <state width="1899" height="320" key="GridCell.Tab.0.center" timestamp="1603763976697">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1059" height="1137" key="GridCell.Tab.0.center/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603071700686" />
-    <state width="1899" height="143" key="GridCell.Tab.0.center/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603277103006" />
-    <state width="1899" height="143" key="GridCell.Tab.0.left" timestamp="1603277103006">
+    <state width="1059" height="60" key="GridCell.Tab.0.center/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603630622400" />
+    <state width="1899" height="320" key="GridCell.Tab.0.center/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603763976697" />
+    <state width="1899" height="320" key="GridCell.Tab.0.left" timestamp="1603763976697">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1059" height="1137" key="GridCell.Tab.0.left/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603071700686" />
-    <state width="1899" height="143" key="GridCell.Tab.0.left/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603277103006" />
-    <state width="1899" height="143" key="GridCell.Tab.0.right" timestamp="1603277103006">
+    <state width="1059" height="60" key="GridCell.Tab.0.left/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603630622400" />
+    <state width="1899" height="320" key="GridCell.Tab.0.left/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603763976697" />
+    <state width="1899" height="320" key="GridCell.Tab.0.right" timestamp="1603763976697">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1059" height="1137" key="GridCell.Tab.0.right/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603071700687" />
-    <state width="1899" height="143" key="GridCell.Tab.0.right/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603277103006" />
-    <state width="1899" height="553" key="GridCell.Tab.1.bottom" timestamp="1603270883097">
+    <state width="1059" height="60" key="GridCell.Tab.0.right/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603630622400" />
+    <state width="1899" height="320" key="GridCell.Tab.0.right/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603763976697" />
+    <state width="1899" height="328" key="GridCell.Tab.1.bottom" timestamp="1603720695152">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="553" key="GridCell.Tab.1.bottom/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603270883097" />
-    <state width="1899" height="553" key="GridCell.Tab.1.center" timestamp="1603270883097">
+    <state width="1059" height="1072" key="GridCell.Tab.1.bottom/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603616240986" />
+    <state width="1899" height="328" key="GridCell.Tab.1.bottom/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603720695152" />
+    <state width="1899" height="328" key="GridCell.Tab.1.center" timestamp="1603720695152">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="553" key="GridCell.Tab.1.center/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603270883097" />
-    <state width="1899" height="553" key="GridCell.Tab.1.left" timestamp="1603270883097">
+    <state width="1059" height="1072" key="GridCell.Tab.1.center/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603616240986" />
+    <state width="1899" height="328" key="GridCell.Tab.1.center/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603720695152" />
+    <state width="1899" height="328" key="GridCell.Tab.1.left" timestamp="1603720695152">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="553" key="GridCell.Tab.1.left/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603270883097" />
-    <state width="1899" height="553" key="GridCell.Tab.1.right" timestamp="1603270883097">
+    <state width="1059" height="1072" key="GridCell.Tab.1.left/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603616240986" />
+    <state width="1899" height="328" key="GridCell.Tab.1.left/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603720695152" />
+    <state width="1899" height="328" key="GridCell.Tab.1.right" timestamp="1603720695152">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="553" key="GridCell.Tab.1.right/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603270883097" />
+    <state width="1059" height="1072" key="GridCell.Tab.1.right/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603616240986" />
+    <state width="1899" height="328" key="GridCell.Tab.1.right/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1603720695152" />
     <state x="-1048" y="283" key="SettingsEditor" timestamp="1602379458283">
       <screen x="-1080" y="0" width="1080" height="1880" />
     </state>
@@ -244,6 +294,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="662" y="118" width="596" height="804" key="find.popup/-1080.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1602671240877" />
+    <state x="-700" y="724" key="refactoring.ChangeSignatureDialog" timestamp="1603630757167">
+      <screen x="-1080" y="0" width="1080" height="1880" />
+    </state>
+    <state x="-700" y="724" key="refactoring.ChangeSignatureDialog/-1080.0.1080.1880/0.0.1920.1040@-1080.0.1080.1880" timestamp="1603630757167" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602671226872">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -252,6 +306,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/base_algorithm/bpr.py</url>
+          <line>89</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -260,5 +321,10 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="dataset.__len__()" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
