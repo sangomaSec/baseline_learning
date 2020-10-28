@@ -1,2 +1,3 @@
 venv
-dataset
+dataset\amazon
+dataset\train
